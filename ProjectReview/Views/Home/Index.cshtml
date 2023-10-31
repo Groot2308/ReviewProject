@@ -1,0 +1,367 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+}
+@using ProjectReview.Models
+@model IEnumerable<Location>
+
+<div class="banner-area" id="banner-area" style="background-image:url(images/banner/pexels-arnie-chou-1004123.jpg);">
+    <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8 col-12 mx-auto">
+                    <h1 class="text-white text-center">Discover. Learn. Enjoy</h1>
+
+                    <h6 class="text-center">platform for creatives around the world</h6>
+
+                    <form method="get" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" role="search">
+                        <div class="input-group input-group-lg">
+                            <input name="keyword" type="search" class="form-control" id="keyword" placeholder="Design, Code, Marketing, Finance ..." aria-label="Search">
+
+                            <button type="submit" class="form-control">Search</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Banner area end-->
+
+<section class="projects" id="projects">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-12">
+                <h2 class="section-title"><span>We make shipping easy</span>Our Delivery Projects</h2>
+                <h2 class="section-title"><span>What We Do</span>Our Services</h2>
+            </div>
+        </div>
+        <!-- Title row end-->
+
+        <div class="row ts-service-row-box">
+            @foreach (Location list in Model)
+            {
+            <div class="col-lg-4 col-md-12">
+                <div class="ts-service-box">
+                    <div class="ts-service-image-wrapper">
+                        <img class="img-fluid" src="images/services/service1.jpg" alt="">
+                    </div>
+                    <div class="ts-service-content">
+                        <h3 class="service-title">@list.Name</h3>
+                        <p>@list.Address</p>
+                        <p><a class="link-more" href="service-single.html">Read More<i class="icon icon-right-arrow2"></i></a></p>
+                    </div>
+                </div>
+                <!-- Service1 end-->
+            </div>
+                
+            }
+            
+            <!-- Col end-->
+            
+            <!-- Col end-->
+            
+            <!-- Col end-->
+        </div>
+        <!-- Content row end-->
+    </div>
+    <!-- Container end-->
+</section>
+<!-- Service end-->
+
+<section class="testimonial-area" id="testimonial-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="accordion-title">
+                    <h3 class="column-title"><span>Our FAQ</span> Frequently Asked Questions</h3>
+                </div>
+                <div id="accordion" class="accordion-area">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <a href="#" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    What do I get when my account is paid off?
+                                </a>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseOne" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <p>
+                                    A business strategy is the means by which it sets out to achieve its desired ends. You have
+                                    ideas, goals, and dreams. We have a culturally diverse.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                                <a href="#" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    My payment was postmarked on the due date, why is it considered late?
+                                </a>
+                            </h5>
+                        </div>
+                        <div class="collapse" id="collapseThree" aria-labelledby="headingThree" data-parent="#accordion">
+                            <div class="card-body">
+                                <p>
+                                    A business strategy is the means by which it sets out to achieve its desired ends. You have
+                                    ideas, goals, and dreams. We have a culturally diverse.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingFour">
+                            <h5 class="mb-0">
+                                <a href="#" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    I sent my payment on time, but it has not been credited to my account?
+                                </a>
+                            </h5>
+                        </div>
+                        <div class="collapse" id="collapseFour" aria-labelledby="headingFour" data-parent="#accordion">
+                            <div class="card-body">
+                                <p>
+                                    A business strategy is the means by which it sets out to achieve its desired ends. You have
+                                    ideas, goals, and dreams. We have a culturally diverse.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accordion end -->
+            </div>
+            <!-- Col end-->
+            <div class="col-lg-6 testimonial-client">
+                <h2 class="column-title "><span>What They Said</span>  Client Testimonials</h2>
+                <div class="owl-carousel owl-theme testimonial-slide owl-dark" id="testimonial-slide">
+                    <div class="item">
+                        <div class="quote-item quote-square">
+                            <span class="quote-text">			Midst brought winged midst beast years, be very was. Brought that called creeping was shall every also divide created had. Forth without image gathered morning that gathered our beginning, midst. Divided yielding moveth kind grass.</span>
+                            <div class="quote-item-footer">
+                                <img class="testimonial-thumb" src="images/clients/testimonial1.png" alt="testimonial">
+                                <div class="quote-item-info">
+                                    <p class="quote-author">Gabriel Denis</p><span class="quote-subtext">Chairman, OKT</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Quote item end-->
+                    </div>
+                    <!-- Item 1 end-->
+                    <div class="item">
+                        <div class="quote-item quote-square">
+                            <span class="quote-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor inci done idunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitoa tion ullamco laboris nisi aliquip consequat.</span>
+                            <div class="quote-item-footer">
+                                <img class="testimonial-thumb" src="images/clients/testimonial2.png" alt="testimonial">
+                                <div class="quote-item-info">
+                                    <h3 class="quote-author">Weldon Cash</h3><span class="quote-subtext">CFO, First Choice</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Quote item end-->
+                    </div>
+                    <!-- Item 2 end-->
+                    <div class="item">
+                        <div class="quote-item quote-square">
+                            <span class="quote-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor inci done idunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitoa tion ullamco laboris nisi ut commodo consequat.</span>
+                            <div class="quote-item-footer">
+                                <img class="testimonial-thumb" src="images/clients/testimonial3.png" alt="testimonial">
+                                <div class="quote-item-info">
+                                    <h3 class="quote-author">Minter Puchan</h3><span class="quote-subtext">Director, AKT</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Quote item end-->
+                    </div>
+                    <!-- Item 3 end-->
+                </div>
+                <!-- Testimonial carousel end-->
+            </div>
+            <!-- Col end-->
+        </div>
+        <!-- Content row end-->
+    </div>
+    <!-- Container end-->
+</section>
+<!-- Quote area end-->
+
+<section id="ts-facts-area" class="ts-facts-area-bg bg-overlay">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-5 col-md-12 column-left-title">
+                <h2 class="column-title">17 Years Experience in Logistics Field.</h2>
+            </div>
+            <div class="col-lg-7 col-md-12">
+                <div class="container">
+                    <div class="row text-center">
+                        <div class="col-lg-4 col-md-4">
+                            <div class="ts-facts-bg">
+                                <img src="images/icon/fact1.png" alt="" />
+                                <div class="ts-facts-content">
+                                    <h4 class="ts-facts-num"><span class="counterUp">2435</span></h4>
+                                    <p class="facts-desc">Office Worldwide</p>
+                                </div>
+                            </div>
+                            <!-- Facts 1 end-->
+                        </div>
+                        <!-- Col 1 end-->
+                        <div class="col-lg-4 col-md-4">
+                            <div class="ts-facts-bg">
+                                <img src="images/icon/fact2.png" alt="" />
+                                <div class="ts-facts-content">
+                                    <h4 class="ts-facts-num"><span class="counterUp">467</span></h4>
+                                    <p class="facts-desc">KM Per Year</p>
+                                </div>
+                            </div>
+                            <!-- Facts 2 end-->
+                        </div>
+                        <!-- Col 2 end-->
+                        <div class="col-lg-4 col-md-4">
+                            <div class="ts-facts-bg">
+                                <img src="images/icon/fact3.png" alt="" />
+                                <div class="ts-facts-content">
+                                    <h4 class="ts-facts-num"><span class="counterUp">858588</span></h4>
+                                    <p class="facts-desc">Tons of Goods</p>
+                                </div>
+                            </div>
+                            <!-- Facts 3 end-->
+                        </div>
+                        <!-- Col 3 end-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Row end-->
+    </div>
+    <!-- Container 2 end-->
+</section>
+<!-- Facts Area End -->
+
+<section class="news" id="news">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-12">
+                <h2 class="section-title"><span>Whats going on</span>Latest News</h2>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-lg-4 ">
+                <div class="latest-post post-large project-post-large">
+                    <div class="latest-post-media project-post-media">
+                        <a class="latest-post-img" href="project-single.html">
+                            <img class="img-fluid" src="images/projects/project1.jpg" alt="img">
+                        </a>
+
+                        <div class="post-body project-body project-post-body">
+                            <a class="post-cat" href="project-single.html">Vegetable goods transportation</a>
+                            <a class="btn btn-primary" href="project-single.html">Read More</a>
+                        </div>
+                        <!-- Post body end-->
+                    </div>
+                    <!-- Post media end-->
+                </div>
+                <!-- Latest post end-->
+            </div>
+            <!-- Col 1 end-->
+            <div class="col-lg-4 ">
+                <div class="latest-post post-large project-post-large">
+                    <div class="latest-post-media project-post-media">
+                        <a class="latest-post-img" href="project-single.html">
+                            <img class="img-fluid" src="images/projects/project2.jpg" alt="img">
+                        </a>
+
+                        <div class="post-body project-body project-post-body">
+                            <a class="post-cat" href="project-single.html">Drill Pipe Transportation</a>
+                            <a class="btn btn-primary" href="project-single.html">Read More</a>
+                        </div>
+                        <!-- Post body end-->
+                    </div>
+                    <!-- Post media end-->
+                </div>
+                <!-- Latest post end-->
+            </div>
+            <!-- Col 2 end-->
+            <div class="col-lg-4 ">
+                <div class="latest-post post-large project-post-large">
+                    <div class="latest-post-media project-post-media">
+                        <a class="latest-post-img" href="project-single.html">
+                            <img class="img-fluid" src="images/projects/project3.jpg" alt="img">
+                        </a>
+
+                        <div class="post-body project-body project-post-body">
+                            <a class="post-cat" href="project-single.html">Packing and Crating Delivery</a>
+                            <a class="btn btn-primary" href="project-single.html">Read More</a>
+                        </div>
+                        <!-- Post body end-->
+                    </div>
+                    <!-- Post media end-->
+                </div>
+                <!-- Latest post end-->
+            </div>
+            <!-- Col 3 end-->
+        </div>
+        <!-- row 1 end-->
+        <div class="gap-30"></div>
+        <div class="row ">
+            <div class="col-lg-4 ">
+                <div class="latest-post post-large project-post-large">
+                    <div class="latest-post-media project-post-media">
+                        <a class="latest-post-img" href="project-single.html">
+                            <img class="img-fluid" src="images/projects/project4.jpg" alt="img">
+                        </a>
+
+                        <div class="post-body project-body project-post-body">
+                            <a class="post-cat" href="project-single.html">Storing German elevator manufacturer’s</a>
+                            <a class="btn btn-primary" href="project-single.html">Read More</a>
+                        </div>
+                        <!-- Post body end-->
+                    </div>
+                    <!-- Post media end-->
+                </div>
+                <!-- Latest post end-->
+            </div>
+            <!-- Col 1 end-->
+            <div class="col-lg-4 ">
+                <div class="latest-post post-large project-post-large">
+                    <div class="latest-post-media project-post-media">
+                        <a class="latest-post-img" href="project-single.html">
+                            <img class="img-fluid" src="images/projects/project5.jpg" alt="img">
+                        </a>
+
+                        <div class="post-body project-body project-post-body">
+                            <a class="post-cat" href="project-single.html">The Red Line Container Project</a>
+                            <a class="btn btn-primary" href="project-single.html">Read More</a>
+                        </div>
+                        <!-- Post body end-->
+                    </div>
+                    <!-- Post media end-->
+                </div>
+                <!-- Latest post end-->
+            </div>
+            <!-- Col 2 end-->
+            <div class="col-lg-4 ">
+                <div class="latest-post post-large project-post-large">
+                    <div class="latest-post-media project-post-media">
+                        <a class="latest-post-img" href="project-single.html">
+                            <img class="img-fluid" src="images/projects/project6.jpg" alt="img">
+                        </a>
+
+                        <div class="post-body project-body project-post-body">
+                            <a class="post-cat" href="project-single.html">CEA Ao-Udom Ground Facility</a>
+                            <a class="btn btn-primary" href="project-single.html">Read More</a>
+                        </div>
+                        <!-- Post body end-->
+                    </div>
+                    <!-- Post media end-->
+                </div>
+                <!-- Latest post end-->
+            </div>
+            <!-- Col 3 end-->
+        </div>
+        <!-- row 2 end-->
+    </div>
+    <!-- Container end-->
+</section>
+<!-- Projects end-->
