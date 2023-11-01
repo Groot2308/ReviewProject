@@ -64,7 +64,7 @@
                             <div class="collapse navbar-collapse justify-content-start" id="navbarSupportedContent">
                                 <ul class="navbar-nav">
                                     <li class="nav-item dropdown active">
-                                        <a class="nav-link" href="#">Home</a>
+                                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                                     </li>
                                     <!-- li end-->
                                     <li class="nav-item dropdown">
@@ -77,60 +77,30 @@
                                             <li><a href="gallery.html">Gallery</a></li>
                                         </ul>
                                     </li>
-                                    <!-- li end-->
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link" href="#" data-toggle="dropdown">Projects<i class="fa fa-angle-down"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="project-all.html">Projects All</a></li>
-                                            <li><a href="#">Projects Single</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- li end-->
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link" href="#" data-toggle="dropdown">Services<i class="fa fa-angle-down"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="service.html">Services All</a></li>
-                                            <li><a href="service-single.html">Services Single</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- li end-->
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link" href="#" data-toggle="dropdown">Features<i class="fa fa-angle-down"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="addons-1.html">Addons 1</a></li>
-                                            <li><a href="addons-2.html">Addons 2</a></li>
-                                            <li><a href="addons-3.html">Addons 3</a></li>
-                                            <li><a href="#">404</a></li>
-                                            <li class="dropdown-submenu">
-                                                <a class="nav-link" href="#" data-toggle="dropdown">Parent Menu</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="#">Child Menu 1</a></li>
-                                                    <li><a href="#">Child Menu 2</a></li>
-                                                    <li><a href="#">Child Menu 3</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <!-- li end-->
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link" href="#" data-toggle="dropdown">
-                                            News
-                                            <i class="fa fa-angle-down"></i>
-                                        </a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="news-left-sidebar.html">Blog With Right Sidebar</a></li>
-                                            <li><a href="news-right-sidebar.html">Blog With Left Sidebar</a></li>
-                                            <li><a href="news-single.html">Single News</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- li end-->
+                                    <!-- li end-->                                                                    
                                     <li class="nav-item dropdown">
                                         <a href="contact.html">Contact</a>
                                     </li>
                                 </ul>
                                 <!--Nav ul end-->
                             </div>
-                            <a asp-controller="Login" asp-action="Login" class="top-right-btn btn btn-primary">Login</a>
+                        
+                            @{
+                                string? accJson = Context.Session.GetString("User");
+                                if (accJson == null)
+                                {
+                                    <a asp-controller="Login" asp-action="Login" class="top-right-btn btn btn-primary">Login</a>
+                                }
+                                if (accJson != null)
+                                {
+                                    User? acc = JsonConvert.DeserializeObject<User>(accJson);
+                                    if (acc.Id != null)
+                                    {
+                                        <a asp-controller="Login" asp-action="Logout" class="top-right-btn btn btn-primary">Logout</a>
+                                    }
+                                }
+                            }
+
                             <!-- Top bar btn -->
                         </nav>
                         <!-- Collapse end-->
