@@ -20,7 +20,7 @@ namespace ProjectReview.Controllers
         public IActionResult Index()
         {
             var includes = new string[] { "Status", "Type" };
-
+            //check vâ
             IEnumerable<Location> locations = _locationRepository.GetAll(includes);
             return View(locations);
         }
