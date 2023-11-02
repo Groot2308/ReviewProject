@@ -21,7 +21,7 @@ namespace ProjectReview.Controllers
         {
             var includes = new string[] { "Status", "Type" };
 
-            IEnumerable<Location> locations = _locationRepository.GetAll();
+            IEnumerable<Location> locations = _locationRepository.GetAll(includes);
             return View(locations);
         }
 
