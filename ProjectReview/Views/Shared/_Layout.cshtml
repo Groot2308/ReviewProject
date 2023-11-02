@@ -68,14 +68,7 @@
                                     </li>
                                     <!-- li end-->
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link" href="#" data-toggle="dropdown">Company<i class="fa fa-angle-down"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="about.html">About Us </a></li>
-                                            <li><a href="team.html">Our Team</a></li>
-                                            <li><a href="pricing-table.html">Pricing </a></li>
-                                            <li><a href="faq.html">Faq</a></li>
-                                            <li><a href="gallery.html">Gallery</a></li>
-                                        </ul>
+                                        <a class="nav-link" asp-controller="Location" asp-action="Location" >Restaurant</a>                    
                                     </li>
                                     <!-- li end-->                                                                    
                                     <li class="nav-item dropdown">
@@ -197,6 +190,22 @@
 
         <!-- Template custom-->
         <script type="text/javascript" src="~/js/custom.js" asp-append-version="true"></script>
+
+
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU&libraries=places"></script>
+        <script>
+            function initMap() {
+                // Code xử lý bản đồ sẽ ở đây
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: 10.8231, lng: 106.6297 }, // Tọa độ TP.HCM
+                    zoom: 12
+                });
+            }
+        </script>
+        <!-- Google Map Plugin-->
+        <script type="text/javascript" src="~/js/gmap3.js" asp-append-version="true"></script>
+        <!-- initialize jQuery Library-->
+        <script type="text/javascript" src="~/js/jquery.js" asp-append-version="true"></script>
     </div>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

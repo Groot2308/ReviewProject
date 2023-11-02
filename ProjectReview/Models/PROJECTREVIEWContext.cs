@@ -65,6 +65,8 @@ namespace ProjectReview.Models
                     .HasColumnType("datetime")
                     .HasColumnName("date");
 
+                entity.Property(e => e.Image).HasColumnName("image");
+
                 entity.Property(e => e.LikeNumber).HasColumnName("likeNumber");
 
                 entity.Property(e => e.LocationId).HasColumnName("locationID");

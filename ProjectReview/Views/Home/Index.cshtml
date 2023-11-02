@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 
 }
@@ -16,7 +15,7 @@
 
                     <form method="get" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" role="search">
                         <div class="input-group input-group-lg">
-                            <input name="keyword" type="search" class="form-control" id="keyword" placeholder="Design, Code, Marketing, Finance ..." aria-label="Search">
+                            <input name="keyword" type="search" class="form-control" id="keyword" placeholder="location...." aria-label="Search">
 
                             <button type="submit" class="form-control">Search</button>
                         </div>
@@ -39,7 +38,7 @@
         <div class="row ">
             @foreach (Location locations in Model)
             {
-                <div class="col-lg-4 ">
+                <div class="col-lg-4 " style="    margin-bottom: 40px;">
                     <div class="latest-post post-large project-post-large">
                         <div class="latest-post-media project-post-media">
                             <a class="latest-post-img" href="project-single.html">
@@ -58,103 +57,10 @@
                 </div>
             }
             <!-- Col 1 end-->
-            <div class="col-lg-4 ">
-                <div class="latest-post post-large project-post-large">
-                    <div class="latest-post-media project-post-media">
-                        <a class="latest-post-img" href="project-single.html">
-                            <img class="img-fluid" src="images/projects/project2.jpg" alt="img">
-                        </a>
 
-                        <div class="post-body project-body project-post-body">
-                            <a class="post-cat" href="project-single.html">Drill Pipe Transportation</a>
-                            <a class="btn btn-primary" href="project-single.html">Read More</a>
-                        </div>
-                        <!-- Post body end-->
-                    </div>
-                    <!-- Post media end-->
-                </div>
-                <!-- Latest post end-->
-            </div>
-            <!-- Col 2 end-->
-            <div class="col-lg-4 ">
-                <div class="latest-post post-large project-post-large">
-                    <div class="latest-post-media project-post-media">
-                        <a class="latest-post-img" href="project-single.html">
-                            <img class="img-fluid" src="images/projects/project3.jpg" alt="img">
-                        </a>
-
-                        <div class="post-body project-body project-post-body">
-                            <a class="post-cat" href="project-single.html">Packing and Crating Delivery</a>
-                            <a class="btn btn-primary" href="project-single.html">Read More</a>
-                        </div>
-                        <!-- Post body end-->
-                    </div>
-                    <!-- Post media end-->
-                </div>
-                <!-- Latest post end-->
-            </div>
-            <!-- Col 3 end-->
         </div>
-        <!-- row 1 end-->
-        <div class="gap-30"></div>
-        <div class="row ">
-            <div class="col-lg-4 ">
-                <div class="latest-post post-large project-post-large">
-                    <div class="latest-post-media project-post-media">
-                        <a class="latest-post-img" href="project-single.html">
-                            <img class="img-fluid" src="images/projects/project4.jpg" alt="img">
-                        </a>
 
-                        <div class="post-body project-body project-post-body">
-                            <a class="post-cat" href="project-single.html">Storing German elevator manufacturer’s</a>
-                            <a class="btn btn-primary" href="project-single.html">Read More</a>
-                        </div>
-                        <!-- Post body end-->
-                    </div>
-                    <!-- Post media end-->
-                </div>
-                <!-- Latest post end-->
-            </div>
-            <!-- Col 1 end-->
-            <div class="col-lg-4 ">
-                <div class="latest-post post-large project-post-large">
-                    <div class="latest-post-media project-post-media">
-                        <a class="latest-post-img" href="project-single.html">
-                            <img class="img-fluid" src="images/projects/project5.jpg" alt="img">
-                        </a>
-
-                        <div class="post-body project-body project-post-body">
-                            <a class="post-cat" href="project-single.html">The Red Line Container Project</a>
-                            <a class="btn btn-primary" href="project-single.html">Read More</a>
-                        </div>
-                        <!-- Post body end-->
-                    </div>
-                    <!-- Post media end-->
-                </div>
-                <!-- Latest post end-->
-            </div>
-            <!-- Col 2 end-->
-            <div class="col-lg-4 ">
-                <div class="latest-post post-large project-post-large">
-                    <div class="latest-post-media project-post-media">
-                        <a class="latest-post-img" href="project-single.html">
-                            <img class="img-fluid" src="images/projects/project6.jpg" alt="img">
-                        </a>
-
-                        <div class="post-body project-body project-post-body">
-                            <a class="post-cat" href="project-single.html">CEA Ao-Udom Ground Facility</a>
-                            <a class="btn btn-primary" href="project-single.html">Read More</a>
-                        </div>
-                        <!-- Post body end-->
-                    </div>
-                    <!-- Post media end-->
-                </div>
-                <!-- Latest post end-->
-            </div>
-            <!-- Col 3 end-->
-        </div>
-        <!-- row 2 end-->
     </div>
-    <!-- Container end-->
+
 </section>
 <!-- Projects end-->
