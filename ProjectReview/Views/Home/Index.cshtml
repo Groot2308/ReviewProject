@@ -35,18 +35,25 @@
                 <h2 class="section-title"><span>We make shipping easy</span>Our Delivery Projects</h2>
             </div>
         </div>
-        <div class="row ">
+        <div class="row">
             @foreach (Location locations in Model)
             {
-                <div class="col-lg-4 " style="    margin-bottom: 40px;">
+                <div class="col-lg-4" style="margin-bottom: 40px;">
                     <div class="latest-post post-large project-post-large">
                         <div class="latest-post-media project-post-media">
                             <a class="latest-post-img" href="project-single.html">
-                                <img class="img-fluid" src="~/images/projects/project1.jpg" alt="img">
+                                @if (locations.LocationImgs.Any())
+                                {
+                                    <img class="img-fluid" src="@locations.LocationImgs.First()" alt="img">
+                                }
+                                else
+                                {
+                                    <img class="img-fluid" src="~/images/default-image.jpg" alt="Default Image">
+                                }
                             </a>
 
                             <div class="post-body project-body project-post-body">
-                                <a class="post-cat" href="project-single.html">@locations.Name <br> @locations.Type?.Name</a> <br>
+                                <a class="post-cat" href="project-single.html">@locations.Name <br> @locations.Type?.Name</a>
                                 <a class="btn btn-primary" href="project-single.html">Read More</a>
                             </div>
                             <!-- Post body end-->
@@ -57,7 +64,6 @@
                 </div>
             }
             <!-- Col 1 end-->
-
         </div>
 
     </div>
