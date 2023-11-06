@@ -4962,7 +4962,7 @@ p.panel-title a.collapsed {
 }
 
 .card-body {
-  border: 1px solid rgba(0, 0, 0, 0.125);
+/*  border: 1px solid rgba(0, 0, 0, 0.125);*/
   border-top: none;
 }
 
