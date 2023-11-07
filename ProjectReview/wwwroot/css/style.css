@@ -2543,10 +2543,10 @@ h5.mb-0 .project-btn{
     position: absolute;
     bottom: 25px;
     color: #fff;
-    padding: 80px 30px 30px 30px;
+    padding: 75px 30px 6px 30px;
     background: rgba(0,0,0,0.5);
     display: inline-block;
-    width: 80%;
+    width: 83%;
     left: 30px;
 }
 
@@ -4962,7 +4962,7 @@ p.panel-title a.collapsed {
 }
 
 .card-body {
-  border: 1px solid rgba(0, 0, 0, 0.125);
+/*  border: 1px solid rgba(0, 0, 0, 0.125);*/
   border-top: none;
 }
 

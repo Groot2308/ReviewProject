@@ -445,9 +445,8 @@ hr {
     }
 
 .img-fluid {
-    display: block;
-    width: 100%;
-    height: 16rem;
+    max-width: 100%;
+    height: auto
 }
 
 .img-thumbnail {
@@ -4415,7 +4414,8 @@ tbody.collapse.show {
     -webkit-box-flex: 1;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-    padding: 1.25rem
+    padding: 1.25rem;
+    border: 1px solid rgba(0,0,0,.125)
 }
 
 .card-title {
@@ -6094,23 +6094,23 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 }
 
 .border {
-    border: 1px solid #dee2e6 !important
+    border: 1px solid #efefef !important
 }
 
 .border-top {
-    border-top: 1px solid #dee2e6 !important
+    border-top: 1px solid #efefef !important
 }
 
 .border-right {
-    border-right: 1px solid #dee2e6 !important
+    border-right: 1px solid #efefef !important
 }
 
 .border-bottom {
-    border-bottom: 1px solid #dee2e6 !important
+    border-bottom: 1px solid #efefef !important
 }
 
 .border-left {
-    border-left: 1px solid #dee2e6 !important
+    border-left: 1px solid #efefef !important
 }
 
 .border-0 {

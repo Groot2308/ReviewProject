@@ -1,6 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+}
 
+@section assets{
+    <link rel="shortcut icon" type="image/png" href="~/assets/images/icon/favicon.ico" asp-append-version="true">
+    <!-- all css here -->
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/assets/css/font-awesome.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/assets/css/magnific-popup.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/assets/css/slicknav.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/assets/css/typography.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/assets/css/default-css.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/assets/css/styles.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/assets/css/responsive.css" asp-append-version="true">
+    <!--color css-->
+    <link rel="stylesheet" id="triggerColor" href="~/assets/css/triggerplate/color-0.css" asp-append-version="true">
+    <!-- modernizr css -->
+    <script src="~/assets/js/vendor/modernizr-2.8.3.min.js" asp-append-version="true"></script>
 }
 
 <div class="banner-area" id="banner-area" style="background-image:url(images/banner/pexels-arnie-chou-1004123.jpg);">
@@ -21,7 +38,6 @@
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </section>
@@ -35,36 +51,45 @@
                 <h2 class="section-title"><span>We make shipping easy</span>Our Delivery Projects</h2>
             </div>
         </div>
-        <div class="row">
+
+        <div class="row ">
             @foreach (Location locations in Model)
             {
                 <div class="col-lg-4" style="margin-bottom: 40px;">
                     <div class="latest-post post-large project-post-large">
                         <div class="latest-post-media project-post-media">
-                            <a class="latest-post-img" href="project-single.html">
+                            <a class="latest-post-img" asp-controller="Location" asp-action="LocationDetail" asp-route-id="@locations.Id">
                                 @if (locations.LocationImgs.Any())
                                 {
-                                    <img class="img-fluid" src="@locations.LocationImgs.First()" alt="img">
-                                }
-                                else
-                                {
-                                    <img class="img-fluid" src="~/images/default-image.jpg" alt="Default Image">
+                                    <!-- Hiển thị chỉ hình ảnh đầu tiên của mỗi đối tượng Location -->
+                                    <img style="height: 22rem" class="img-fluid" src="@locations.LocationImgs.First().Image" alt="img">
                                 }
                             </a>
 
                             <div class="post-body project-body project-post-body">
-                                <a class="post-cat" href="project-single.html">@locations.Name <br> @locations.Type?.Name</a>
-                                <a class="btn btn-primary" href="project-single.html">Read More</a>
+                                <a class="post-cat" asp-controller="Location" asp-action="LocationDetail" asp-route-id="@locations.Id">
+                                    @locations.Name <br>
+                                </a>
+                                <a class="btn btn-primary" asp-controller="Location" asp-action="LocationDetail" asp-route-id="@locations.Id">Read More</a>
                             </div>
-                            <!-- Post body end-->
                         </div>
-                        <!-- Post media end-->
                     </div>
-                    <!-- Latest post end-->
+                    <div class="card-body">
+                        <div class="course-meta-title mb-4">
+                            <div class="course-meta-text">
+                                <h4><a href="#">@locations.Name</a></h4>
+                                <ul class="course-meta-stats">
+                                    <li><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half"></i></li>
+                                    <li>36 <i class="fa fa-comment"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p>@locations.Address</p>
+                    </div>
                 </div>
             }
-            <!-- Col 1 end-->
         </div>
+
 
     </div>
 

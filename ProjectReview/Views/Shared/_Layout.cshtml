@@ -44,8 +44,7 @@
 
     <link href="~/css/templatemo-topic-listing.css" rel="stylesheet" asp-append-version="true">
 
-
-
+    @RenderSection("assets", required: false)
 
 </head>
 <body>
@@ -173,7 +172,7 @@
         </footer>
         <!-- Footer end-->
         <!-- initialize jQuery Library-->
-        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="~/js/jquery.js" asp-append-version="true"></script>
 
 
         <!-- Bootstrap jQuery-->
