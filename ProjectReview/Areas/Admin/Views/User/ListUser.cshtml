@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewData["Title"] = "ListUser";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+@using ProjectReview.Models
+@using X.PagedList
+@model IPagedList<User>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">List User</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard v2</li>
+                    </ol>
+                </div><!-- /.col -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="searchKeyword" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <button class="btn btn-primary" onclick="searchUsers()">Search</button>
+                    </div>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+        <script>
+            function searchUsers() {
+                var searchKeyword = $("#searchKeyword").val();
+                var url = "/UserManager/Users?page=1&pageSize=@ViewBag.PageSize&searchKeyword=" + searchKeyword;
+                window.location.href = url;
+            }
+        </script>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Simple Full Width Table</h3>
+
+                    <div class="card-tools">
+                        <ul class="pagination pagination-sm float-right">
+                            @if (Model.PageNumber > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="~/UserManager/Users?page=@(Model.PageNumber - 1)@(string.IsNullOrEmpty(ViewBag.SearchKeyword) ? "" : $"&searchKeyword={ViewBag.SearchKeyword}")">&laquo;</a>
+                                </li>
+                            }
+                            @for (int i = 1; i <= Model.PageCount; i++)
+                            {
+                                <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                                    <a class="page-link" href="~/UserManager/Users?page=@i@(string.IsNullOrEmpty(ViewBag.SearchKeyword) ? "" : $"&searchKeyword={ViewBag.SearchKeyword}")">@i</a>
+                                </li> 
+                            }
+                            @if (Model.PageNumber < Model.PageCount)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="~/UserManager/Users?page=@(Model.PageNumber + 1)@(string.IsNullOrEmpty(ViewBag.SearchKeyword) ? "" : $"&searchKeyword={ViewBag.SearchKeyword}")">&raquo;</a>
+                                </li>
+                            }
+                        </ul>
+
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Name</th>
+                                <th>Mail</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Create At</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int index = 1;
+                            }
+                            @foreach(User list in Model)
+                            {
+                               <tr>
+                                    <td>@(index++)</td>
+                                    <td>@list.Name</td>
+                                    <td>@list.Email</td>
+                                    <td>@(list.Role?.Name)</td>
+                                    <td>
+                                        <style>
+                                            .button {
+                                                background: none;
+                                                background-color: #28a745; border: none;
+                                                padding: 5px;
+                                                margin: auto;
+                                                cursor: pointer;
+                                                border-radius: 6px;
+                                            }
+                                        </style>
+                                        @if (list.Status?.Id == 2)
+                                        {
+                                            <form action="~/UserManager/ChangeStatus?page=@Model.PageNumber"  method="post">
+                                                <button type="submit" class="button badge bg-danger" style="height:fit-content" name="id" value="@list.Id">
+                                                    @list.Status?.Name
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <form action="~/UserManager/ChangeStatus?page=@Model.PageNumber" method="post">
+                                                <button type="submit" class="button badge bg-success" name="id" style="height:fit-content;background-color: #28a745;" value="@list.Id">
+                                                    
+                                                   @list.Status?.Name
+                                                </button>
+                                            </form>
+                                        }
+                                    </td>
+
+                                    
+                                    <td>@list.CreateDate</td>
+                                </tr>
+                            }
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            
+            <!-- /.card -->
+        </div>
+
+    </div>
+</div>
+

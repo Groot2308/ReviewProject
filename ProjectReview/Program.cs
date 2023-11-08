@@ -1,14 +1,17 @@
 ﻿using ProjectReview.Interfaces;
 using ProjectReview.Models;
 using ProjectReview.Repositories;
-
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProjectReview.Data;
+using FluentValidation.AspNetCore;
+using ProjectReview.Validator;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 var connectionString = builder.Configuration.GetConnectionString("MyCnn") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
@@ -19,7 +22,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 var services = builder.Services;
 var configuration = builder.Configuration;
-
+builder.Services.AddControllers()?.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
@@ -27,10 +30,10 @@ builder.Services.AddSession();
 builder.Services.AddScoped<PROJECTREVIEWContext>(); // Đăng ký DbContext
 builder.Services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>)); // Đăng ký IRepository và RepositoryBase
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<ILocationTypeRepository, LocationTypeRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-
 
 // Tích hợp dịch vụ xác thực
 builder.Services.AddAuthentication(options =>
