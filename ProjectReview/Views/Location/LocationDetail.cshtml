@@ -168,10 +168,16 @@
                                     <p>@comment.Content</p>
                                 </div>
 
+                                @{
+                                    string? acc = Context.Session.GetString("User");
+                                    if (acc != null)
+                                    {
+                                        <div class="text-left">
+                                            <a style="color:#da0f32" class="comment-reply" onclick="toggleReplyForm('replyForm_@comment.Id')">Reply</a>
+                                        </div>
+                                    }
+                                }
 
-                                <div class="text-left">
-                                    <a style="color:#da0f32" class="comment-reply" onclick="toggleReplyForm('replyForm_@comment.Id')">Reply</a>
-                                </div>
                                 <!-- Reply Form -->
                                 <div id="replyForm_@comment.Id" style="display: none;">
                                     <form id="form_@comment.Id" asp-controller="Comment" asp-action="Index" method="post">
@@ -204,9 +210,15 @@
                                                 <div class="comment-content">
                                                     <p>@reply.Content</p>
                                                 </div>
-                                                <div class="text-left">
-                                                    <a style="color:#da0f32" class="comment-reply" onclick="toggleReplyForm('replyForm_@reply.Id')">Reply</a>
-                                                </div>
+                                                @{
+                                                    string? check = Context.Session.GetString("User");
+                                                    if (check != null)
+                                                    {
+                                                        <div class="text-left">
+                                                            <a style="color:#da0f32" class="comment-reply" onclick="toggleReplyForm('replyForm_@reply.Id')">Reply</a>
+                                                        </div>
+                                                    }
+                                                }
                                                 <!-- Reply Form -->
                                                 <div id="replyForm_@reply.Id" style="display: none;">
                                                     <form id="form_@comment.Id" asp-controller="Comment" asp-action="Index" method="post">
@@ -267,7 +279,7 @@
                                 <div class="form-group">
                                     <textarea name="commentContent" style="height: 12rem;" class="form-control required-field" id="message" placeholder="Your Comment" rows="10" required></textarea>
                                 </div>
-                            </div><!-- Col 12 end -->             
+                            </div><!-- Col 12 end -->
 
                         </div><!-- Form row end -->
                         <div class="clearfix">
@@ -283,10 +295,10 @@
                 <form role="form" asp-controller="Login" asp-action="Login" method="get">
                     <div class="clearfix">
                         <button style=" width: 50%;
-                        height: 56px;
-                        margin-left: 17rem;
-                        border-radius: 13px;
-                        font-size: 18px;" class="btn btn-primary" type="submit">
+                            height: 56px;
+                            margin-left: 17rem;
+                            border-radius: 13px;
+                            font-size: 18px;" class="btn btn-primary" type="submit">
                             Please Login To Comment
                         </button>
                     </div>
