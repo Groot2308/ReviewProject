@@ -247,29 +247,24 @@ namespace ProjectReview.Models
 
             modelBuilder.Entity<Reply>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("Reply");
+
+                entity.HasKey(e => e.Id);
 
                 entity.Property(e => e.CommentId).HasColumnName("commentID");
 
                 entity.Property(e => e.Content).HasColumnName("content");
-
-                entity.Property(e => e.Date)
-                    .HasColumnType("datetime")
-                    .HasColumnName("date");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
+                entity.Property(e => e.Date).HasColumnType("datetime").HasColumnName("date");
+                entity.Property(e => e.Image).HasColumnName("image");
                 entity.Property(e => e.LikeNumber).HasColumnName("likeNumber");
-
                 entity.Property(e => e.UserId).HasColumnName("userID");
 
                 entity.HasOne(d => d.Comment)
-                    .WithMany()
+                    .WithMany(c => c.Replies)
                     .HasForeignKey(d => d.CommentId)
                     .HasConstraintName("FK_Reply_Comment");
             });
+
 
             modelBuilder.Entity<Role>(entity =>
             {

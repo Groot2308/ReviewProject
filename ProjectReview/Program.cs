@@ -30,7 +30,7 @@ builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<ILocationTypeRepository, LocationTypeRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-
+builder.Services.AddScoped<IReplyRepository, ReplyRepository>();
 
 // Tích hợp dịch vụ xác thực
 builder.Services.AddAuthentication(options =>

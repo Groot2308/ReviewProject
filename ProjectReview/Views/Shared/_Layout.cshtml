@@ -73,12 +73,21 @@
                                     <li class="nav-item dropdown">
                                         <a href="contact.html">Contact</a>
                                     </li>
+                                    @{
+                                        string? accJson = Context.Session.GetString("User");
+                                        if(accJson != null)
+                                        {
+                                            <li class="nav-item dropdown">
+                                                <a href="contact.html">Profile</a>
+                                            </li>
+                                        }
+                                    }
                                 </ul>
                                 <!--Nav ul end-->
                             </div>
                         
                             @{
-                                string? accJson = Context.Session.GetString("User");
+                                //string? accJson = Context.Session.GetString("User");
                                 if (accJson == null)
                                 {
                                     <a asp-controller="Login" asp-action="Login" class="top-right-btn btn btn-primary">Login</a>

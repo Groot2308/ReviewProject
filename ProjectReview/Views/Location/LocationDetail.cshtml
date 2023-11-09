@@ -2,7 +2,7 @@
     ViewData["Title"] = "LocationDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model Location
+@model LocationWithComments
 
 <div class="banner-area" id="banner-area" style="background-image:url('@Url.Content("~/images/banner/banner2.jpg")'); margin-top: 70px;">
     <div class="container">
@@ -28,7 +28,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <h3 class="column-title">@Model.Name</h3>
+                <h3 class="column-title">@Model.Location.Name</h3>
                 <div class="carousel slide " id="main-slide" data-ride="carousel">
                     <!-- Indicators-->
                     <ol class="carousel-indicators visible-lg visible-md">
@@ -38,12 +38,21 @@
                     </ol>
                     <!-- Indicators end-->
                     <!-- Carousel inner-->
+                    @*        <div class="carousel-inner">
+                    @foreach (var locationImg in Model.LocationImgs)
+                    {
+                    <div class="carousel-item @(locationImg == Model.LocationImgs.First() ? "active" : "")">
+                    <img src="@Url.Content(locationImg.ToString())" class="d-block w-100" alt="Image">
+                    </div>
+                    }
+                    </div>*@
+
                     <div class="carousel-inner">
-                        @foreach (var locationImg in Model.LocationImgs)
-                        {
-                            <div class="carousel-item @(locationImg == Model.LocationImgs.First() ? "active" : "")" style="background-image:url('@Url.Content(locationImg.ToString())');">
-                            </div>
-                        }
+                        <div class="carousel-item active" style="background-image:url('@Url.Content("~/images/projects/project1.jpg")');">
+                        </div>
+                        <!-- Carousel item 1 end-->
+                        <div class="carousel-item " style="background-image:url('@Url.Content("~/images/projects/project2.jpg")');">
+                        </div>
                     </div>
                     <!-- Carousel inner end-->
                     <!-- Controllers-->
@@ -139,8 +148,154 @@
 
             </div>
             <!-- col end -->
+
         </div>
         <!-- row end -->
+        <div id="comments" class="comments-area">
+            <h3 class="comments-heading">@Model.Comments.Count() Comments</h3>
+
+            <ul class="comments-list">
+                @foreach (var comment in Model.Comments)
+                {
+                    <li>
+                        <div class="comment">
+                            <img class="comment-avatar pull-left" alt="" src="@comment.User.Avatar">
+                            <div class="comment-body">
+                                <div class="meta-data">
+                                    <span class="comment-author">@comment.User.Name</span>
+                                </div>
+                                <div class="comment-content">
+                                    <p>@comment.Content</p>
+                                </div>
+
+
+                                <div class="text-left">
+                                    <a style="color:#da0f32" class="comment-reply" onclick="toggleReplyForm('replyForm_@comment.Id')">Reply</a>
+                                </div>
+                                <!-- Reply Form -->
+                                <div id="replyForm_@comment.Id" style="display: none;">
+                                    <form id="form_@comment.Id" asp-controller="Comment" asp-action="Index" method="post">
+                                        <input type="hidden" name="commentId" value="@comment.Id" />
+                                        <input type="hidden" name="locationId" value="@Model.Location.Id" />
+                                        <textarea style="margin-bottom: -13px; width: 40%;" name="replyContent" class="reply-textarea" id="replyContent_@comment.Id" placeholder="Write your reply here" required></textarea>
+                                        <button style="    background: #da0f32;
+                                     border: 2px solid transparent;
+                                     color: white;
+                                     border-radius: 7px;
+                                  }" type="submit" class="reply-submit-btn">
+                                            send
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div><!-- Comment end -->
+                        @if (comment.Replies.Any())
+                        {
+                            <ul class="comments-reply">
+                                @foreach (var reply in comment.Replies)
+                                {
+                                    <li>
+                                        <div class="comment">
+                                            <img class="comment-avatar pull-left" alt="" src="@reply.User.Avatar">
+                                            <div class="comment-body">
+                                                <div class="meta-data">
+                                                    <span class="comment-author">@reply.User.Name</span>
+                                                </div>
+                                                <div class="comment-content">
+                                                    <p>@reply.Content</p>
+                                                </div>
+                                                <div class="text-left">
+                                                    <a style="color:#da0f32" class="comment-reply" onclick="toggleReplyForm('replyForm_@reply.Id')">Reply</a>
+                                                </div>
+                                                <!-- Reply Form -->
+                                                <div id="replyForm_@reply.Id" style="display: none;">
+                                                    <form id="form_@comment.Id" asp-controller="Comment" asp-action="Index" method="post">
+                                                        <input type="hidden" name="commentId" value="@comment.Id" />
+                                                        <input type="hidden" name="locationId" value="@Model.Location.Id" />
+                                                        <textarea style="margin-bottom: -13px; width: 40%;" name="replyContent" class="reply-textarea" id="replyContent_@comment.Id" placeholder="Write your reply here" required></textarea>
+                                                        <button style="    background: #da0f32;
+                                     border: 2px solid transparent;
+                                     color: white;
+                                     border-radius: 7px;
+                                  }" type="submit" class="reply-submit-btn">
+                                                            send
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div><!-- Comment end -->
+                                    </li>
+                                }
+                            </ul>
+                            <!-- Comments-reply end -->
+                        }
+                    </li>
+                    <!-- Comments-list li end -->
+                }
+            </ul><!-- Comments-list ul end -->
+
+        </div><!-- Post comment end -->
+
+        <script>
+            function toggleReplyForm(formId) {
+                var form = document.getElementById(formId);
+                form.style.display = form.style.display === "none" ? "block" : "none";
+            }
+
+            function submitReply(commentId) {
+                var replyContent = document.getElementById("replyContent_" + commentId).value;
+                document.getElementById("form_" + commentId).reset();
+                var form = document.getElementById("replyForm_" + commentId);
+                form.style.display = "none";
+            }
+        </script>
+
+        @{
+
+            string? accJson = Context.Session.GetString("User");
+            if (accJson != null)
+            {
+                User? acc = JsonConvert.DeserializeObject<User>(accJson);
+                <div class="comments-form border-box">
+                    <h3 class="title-normal">Add a comment</h3>
+
+                    <form role="form" asp-controller="Comment" asp-action="Comment" method="post">
+                        <input type="hidden" name="locationId" value="@Model.Location.Id" />
+                        <input type="hidden" name="userId" value="@acc.Id" />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea name="commentContent" style="height: 12rem;" class="form-control required-field" id="message" placeholder="Your Comment" rows="10" required></textarea>
+                                </div>
+                            </div><!-- Col 12 end -->             
+
+                        </div><!-- Form row end -->
+                        <div class="clearfix">
+                            <button class="btn btn-primary" type="submit">Post Comment</button>
+                        </div>
+                    </form><!-- Form end -->
+                </div>
+
+                <!-- Comments form end -->
+            }
+            else
+            {
+                <form role="form" asp-controller="Login" asp-action="Login" method="get">
+                    <div class="clearfix">
+                        <button style=" width: 50%;
+                        height: 56px;
+                        margin-left: 17rem;
+                        border-radius: 13px;
+                        font-size: 18px;" class="btn btn-primary" type="submit">
+                            Please Login To Comment
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Form end -->
+            }
+        }
+
     </div>
     <!-- main container end -->
 </section>

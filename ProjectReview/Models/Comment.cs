@@ -15,5 +15,7 @@ namespace ProjectReview.Models
 
         public virtual Location? Location { get; set; }
         public virtual User? User { get; set; }
+
+        public List<Reply> Replies { get; set; } = new List<Reply>();
     }
 }
