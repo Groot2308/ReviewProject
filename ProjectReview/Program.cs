@@ -1,4 +1,4 @@
-﻿using ProjectReview.Interfaces;
+using ProjectReview.Interfaces;
 using ProjectReview.Models;
 using ProjectReview.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -34,6 +34,7 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<ILocationTypeRepository, LocationTypeRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IReplyRepository, ReplyRepository>();
 
 // Tích hợp dịch vụ xác thực
 builder.Services.AddAuthentication(options =>
