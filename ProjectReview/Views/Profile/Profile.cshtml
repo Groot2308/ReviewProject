@@ -119,11 +119,16 @@
 
 </style>
 <div class="container emp-profile">
+    @{
+     
+        string? accJson = Context.Session.GetString("User");
+        User? acc = JsonConvert.DeserializeObject<User>(accJson);
+
     <form method="post">
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
+                    <img src="@acc.Avatar" alt="" />
                     <div class="file btn btn-lg btn-primary">
                         Change Photo
                         <input type="file" name="file" />
@@ -133,7 +138,7 @@
             <div class="col-md-6">
                 <div class="profile-head">
                     <h5>
-                        Kshiti Ghelani
+                       @acc.Name
                     </h5>
                     <h6>
                         Web Developer and Designer
@@ -177,7 +182,7 @@
                                 <label>Email</label>
                             </div>
                             <div class="col-md-6">
-                                <p>kshitighelani@gmail.com</p>
+                                <p>@acc.Email</p>
                             </div>
                         </div>
                         <div class="row">
@@ -201,5 +206,6 @@
             </div>
         </div>
     </form>
+    }
 </div>
 

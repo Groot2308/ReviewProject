@@ -39,18 +39,6 @@
         margin-top: 10px;
     }
 
-    .btn {
-        padding: 10px 20px;
-        background-color: #3498db;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-        .btn:hover {
-            background-color: #2980b9;
-        }
 </style>
 
 
@@ -88,7 +76,8 @@
                     </ol>
                     <!-- Indicators end-->
                     <!-- Carousel inner-->
-                    @*        <div class="carousel-inner">
+
+             @*               <div class="carousel-inner">
                     @foreach (var locationImg in Model.LocationImgs)
                     {
                     <div class="carousel-item @(locationImg == Model.LocationImgs.First() ? "active" : "")">
@@ -98,11 +87,17 @@
                     </div>*@
 
                     <div class="carousel-inner">
-                        <div class="carousel-item active" style="background-image:url('@Url.Content("~/images/projects/project1.jpg")');">
+                         @foreach(var locationImg in Model.Location.LocationImgs){
+
+                            <div class="carousel-item @(locationImg == Model.Location.LocationImgs.First() ? "active" : "")" style="background-image:url('@Url.Content(locationImg.ToString())');">
+                            </div>
+
+                        }
+                   @*     <div class="carousel-item active" style="background-image:url('@Url.Content("~/images/projects/project1.jpg")');">
                         </div>
                         <!-- Carousel item 1 end-->
                         <div class="carousel-item " style="background-image:url('@Url.Content("~/images/projects/project2.jpg")');">
-                        </div>
+                        </div>*@
                     </div>
                     <!-- Carousel inner end-->
                     <!-- Controllers-->
@@ -280,10 +275,10 @@
                                                         <input type="hidden" name="locationId" value="@Model.Location.Id" />
                                                         <textarea style="margin-bottom: -13px; width: 40%;" name="replyContent" class="reply-textarea" id="replyContent_@comment.Id" placeholder="Write your reply here" required></textarea>
                                                         <button style="    background: #da0f32;
-                                     border: 2px solid transparent;
-                                     color: white;
-                                     border-radius: 7px;
-                                  }" type="submit" class="reply-submit-btn">
+                                                 border: 2px solid transparent;
+                                                 color: white;
+                                                  border-radius: 7px;
+                                                  }" type="submit" class="reply-submit-btn">
                                                             send
                                                         </button>
                                                     </form>
@@ -299,7 +294,6 @@
                     <!-- Comments-list li end -->
                 }
             </ul><!-- Comments-list ul end -->
-
         </div><!-- Post comment end -->
 
         <script>
