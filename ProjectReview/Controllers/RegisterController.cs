@@ -80,6 +80,7 @@ namespace ProjectReview.Controllers
                     newUser.RoleId = 2;
                     newUser.StatusId = 2;
                     newUser.CreateDate = DateTime.Now;
+                    newUser.Avatar = "/images/team/user.jpg"; 
                     _userRepository.Add(newUser);
                     _userRepository.SaveChanges();
 
