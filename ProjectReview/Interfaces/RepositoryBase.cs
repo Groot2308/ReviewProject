@@ -133,10 +133,30 @@ namespace ProjectReview.Interfaces
             int skipCount = index * size;
             var resetSet = predicate != null ? query.Where(predicate).AsQueryable() : query.AsQueryable();
             resetSet = skipCount == 0 ? resetSet.Take(size) : resetSet.Skip(skipCount).Take(size);
+
             total = resetSet.Count();
+
+            // Tính tổng số trang dựa trên kích thước trang
+            int totalPages = (int)Math.Ceiling((double)total / size);
 
             return resetSet.ToList();
         }
+
+        /*public virtual IEnumerable<T> GetMultiPaging(Expression<Func<T, bool>> predicate, out int total, int index = 0, int size = 20, string[] includes = null)
+        {
+            IQueryable<T> query = dataContext.Set<T>();
+            if (includes != null)
+            {
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+            }
+
+            int skipCount = index * size;
+            var resetSet = predicate != null ? query.Where(predicate).AsQueryable() : query.AsQueryable();
+            resetSet = skipCount == 0 ? resetSet.Take(size) : resetSet.Skip(skipCount).Take(size);
+            total = resetSet.Count();
+
+            return resetSet.ToList();
+        }*/
 
         public bool CheckContains(Expression<Func<T, bool>> predicate)
         {

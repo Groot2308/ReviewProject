@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ProjectReview.Models;
@@ -23,6 +21,12 @@ namespace ProjectReview.Controllers
         {
             ViewBag.ErrorMessage = TempData["ErrorMessage"];
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -62,16 +66,37 @@ namespace ProjectReview.Controllers
             var redirectUrl = Url.Action("ExternalLoginCallback", "Login", new { ReturnUrl = returnUrl });
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             return new ChallengeResult(provider, properties);
-
-            // Chuyển hướng người dùng đến quá trình xác thực Google
-            return Challenge(properties, provider);
         }
 
-        public  IActionResult ExternalLoginCallback()
+        public async Task<IActionResult> ExternalLoginCallbackAsync()
         {
+            var authenticateResult = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
 
-            return Content("Logged in with Google");
+            if (!authenticateResult.Succeeded)
+            {
+                return BadRequest();
+            }
+            var userEmail = authenticateResult.Principal.FindFirst(ClaimTypes.Email)?.Value;
+            var userName = authenticateResult.Principal.FindFirst(ClaimTypes.Name)?.Value;
+
+
+            User users = _userRepository.GetSingleByCondition(x => x.Email == userEmail);
+            if (users == null)
+            {
+
+                var user = new User { Email = userEmail, Name = userName, CreateDate = DateTime.Now, StatusId = 1, RoleId = 2, Avatar = "/images/team/user.jpg" };
+                _userRepository.Add(user);
+                _userRepository.SaveChanges();
+                string userJson = JsonConvert.SerializeObject(user);
+                HttpContext.Session.SetString("User", userJson);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                string userJson = JsonConvert.SerializeObject(users);
+                HttpContext.Session.SetString("User", userJson);
+                return RedirectToAction("Index", "Home");
+            }
         }
-
     }
 }

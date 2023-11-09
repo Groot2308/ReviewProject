@@ -19,8 +19,10 @@ namespace ProjectReview.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Location> list = _locationRepository.GetAll();
-            return View(list);
+            var includes = new string[] { "Status", "Type", "LocationImgs" };
+            //check vâ
+            IEnumerable<Location> locations = _locationRepository.GetAll(includes);
+            return View(locations);
         }
 
         public IActionResult Privacy()
