@@ -39,8 +39,6 @@ namespace ProjectReview.Areas.Admin.Controllers
         }
 
 
-
-
         [Route("CreateUser")]
         [HttpGet]
         public IActionResult Create()

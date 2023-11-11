@@ -12,8 +12,10 @@ namespace ProjectReview.Models
         public int? CommentId { get; set; }
         public DateTime? Date { get; set; }
         public int? LikeNumber { get; set; }
+        public int? StatusId { get; set; }
 
         public virtual Comment? Comment { get; set; }
+        public virtual CommentStatus? Status { get; set; }
         public virtual User? User { get; set; }
     }
 }

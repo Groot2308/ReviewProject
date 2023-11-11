@@ -12,10 +12,13 @@ namespace ProjectReview.Models
         public int? LocationId { get; set; }
         public DateTime? Date { get; set; }
         public int? LikeNumber { get; set; }
+        public int? StatusId { get; set; }
 
         public virtual Location? Location { get; set; }
         public virtual User? User { get; set; }
+        public virtual CommentStatus? Status { get; set; }
 
         public List<Reply> Replies { get; set; } = new List<Reply>();
+
     }
 }
