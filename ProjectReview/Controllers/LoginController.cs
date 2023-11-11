@@ -50,8 +50,15 @@ namespace ProjectReview.Controllers
                     /*Đây là câu lệnh khi lấy user từ session xuống*/
                     /*string? accJson = HttpContext.Session.GetString("User"); lấy về 
                     User? acc = JsonConvert.DeserializeObject<User>(accJson); đổi kiểu cho nó*/
+                    if (user.RoleId == 1)
+                    {
+                        return RedirectToAction("Dashboard", "admin");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
 
-                    return RedirectToAction("Index", "Home");
                 }
             }
             else
@@ -95,7 +102,15 @@ namespace ProjectReview.Controllers
             {
                 string userJson = JsonConvert.SerializeObject(users);
                 HttpContext.Session.SetString("User", userJson);
-                return RedirectToAction("Index", "Home");
+
+                if (users.RoleId == 1)
+                {
+                    return RedirectToAction("Dashboard", "admin");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
         }
     }

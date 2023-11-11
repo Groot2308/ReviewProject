@@ -11,7 +11,12 @@ namespace ProjectReview.Models
             MessageToUsers = new HashSet<Message>();
             MessageUsers = new HashSet<Message>();
             Notifications = new HashSet<Notification>();
+            From = "reviewlocation8@gmail.com";
+            PasswordSendMail = "xaljwzsnzcqludyv";
         }
+
+        public string From { get; set; }
+        public string PasswordSendMail { get; set; }
 
         public int Id { get; set; }
         public string? Name { get; set; }

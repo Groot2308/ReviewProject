@@ -7,6 +7,7 @@ namespace ProjectReview.Models
     {
         public int? Id { get; set; }
         public string? Content { get; set; }
+        public string? Image { get; set; }
         public int? UserId { get; set; }
         public int? CommentId { get; set; }
         public DateTime? Date { get; set; }
