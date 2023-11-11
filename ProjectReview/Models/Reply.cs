@@ -7,13 +7,13 @@ namespace ProjectReview.Models
     {
         public int? Id { get; set; }
         public string? Content { get; set; }
-        public string? Image { get; set; }
         public int? UserId { get; set; }
         public int? CommentId { get; set; }
         public DateTime? Date { get; set; }
         public int? LikeNumber { get; set; }
+        public int? StatusId { get; set; }
 
         public virtual Comment? Comment { get; set; }
-        public virtual User? User { get; set; }
+        public virtual CommentStatus? Status { get; set; }
     }
 }

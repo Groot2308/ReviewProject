@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ProjectReview.Models
 {
@@ -15,6 +18,7 @@ namespace ProjectReview.Models
 
         public virtual DbSet<City> Cities { get; set; } = null!;
         public virtual DbSet<Comment> Comments { get; set; } = null!;
+        public virtual DbSet<CommentStatus> CommentStatuses { get; set; } = null!;
         public virtual DbSet<District> Districts { get; set; } = null!;
         public virtual DbSet<Location> Locations { get; set; } = null!;
         public virtual DbSet<LocationImg> LocationImgs { get; set; } = null!;
@@ -31,11 +35,10 @@ namespace ProjectReview.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            IConfigurationRoot configuration = builder.Build();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("MyCnn"));
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Name=ConnectionStrings:MyCnn");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -65,11 +68,11 @@ namespace ProjectReview.Models
                     .HasColumnType("datetime")
                     .HasColumnName("date");
 
-                entity.Property(e => e.Image).HasColumnName("image");
-
                 entity.Property(e => e.LikeNumber).HasColumnName("likeNumber");
 
                 entity.Property(e => e.LocationId).HasColumnName("locationID");
+
+                entity.Property(e => e.StatusId).HasColumnName("statusId");
 
                 entity.Property(e => e.UserId).HasColumnName("userID");
 
@@ -78,10 +81,26 @@ namespace ProjectReview.Models
                     .HasForeignKey(d => d.LocationId)
                     .HasConstraintName("FK_Comment_Location");
 
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.StatusId)
+                    .HasConstraintName("FK_Comment_CommentStatus");
+
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_Comment_User");
+            });
+
+            modelBuilder.Entity<CommentStatus>(entity =>
+            {
+                entity.ToTable("CommentStatus");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .HasColumnName("name");
             });
 
             modelBuilder.Entity<District>(entity =>
@@ -247,24 +266,36 @@ namespace ProjectReview.Models
 
             modelBuilder.Entity<Reply>(entity =>
             {
-                entity.ToTable("Reply");
+                entity.HasNoKey();
 
-                entity.HasKey(e => e.Id);
+                entity.ToTable("Reply");
 
                 entity.Property(e => e.CommentId).HasColumnName("commentID");
 
                 entity.Property(e => e.Content).HasColumnName("content");
-                entity.Property(e => e.Date).HasColumnType("datetime").HasColumnName("date");
-                entity.Property(e => e.Image).HasColumnName("image");
+
+                entity.Property(e => e.Date)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
                 entity.Property(e => e.LikeNumber).HasColumnName("likeNumber");
+
+                entity.Property(e => e.StatusId).HasColumnName("statusId");
+
                 entity.Property(e => e.UserId).HasColumnName("userID");
 
                 entity.HasOne(d => d.Comment)
-                    .WithMany(c => c.Replies)
+                    .WithMany()
                     .HasForeignKey(d => d.CommentId)
                     .HasConstraintName("FK_Reply_Comment");
-            });
 
+                entity.HasOne(d => d.Status)
+                    .WithMany()
+                    .HasForeignKey(d => d.StatusId)
+                    .HasConstraintName("FK_Reply_CommentStatus");
+            });
 
             modelBuilder.Entity<Role>(entity =>
             {
@@ -314,13 +345,6 @@ namespace ProjectReview.Models
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.StatusId)
                     .HasConstraintName("FK_User_UserStatus");
-
-                modelBuilder.Entity<User>()
-         .Ignore(u => u.From)
-         .Ignore(u => u.PasswordSendMail);
-                // Thêm nhiều Ignore cho các trường khác nếu cần
-
-                base.OnModelCreating(modelBuilder);
             });
 
             modelBuilder.Entity<UserStatus>(entity =>
