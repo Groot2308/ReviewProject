@@ -15,5 +15,6 @@ namespace ProjectReview.Models
 
         public virtual Comment? Comment { get; set; }
         public virtual CommentStatus? Status { get; set; }
+        public virtual User? User { get; set; }
     }
 }

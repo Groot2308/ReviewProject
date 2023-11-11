@@ -218,14 +218,31 @@
                                 </div>
 
                                 @{
+                               
                                     string? acc = Context.Session.GetString("User");
-                                    if (acc != null)
-                                    {
-                                        <div class="text-left">
-                                            <a style="color:#da0f32" class="comment-reply" onclick="toggleReplyForm('replyForm_@comment.Id')">Reply</a>
-                                        </div>
-                                    }
+                                    <div class="text-left">
+                                        @if (!string.IsNullOrEmpty(Context.Session.GetString("User")))
+                                        {
+                                            <div style="display: flex; align-items: center;">
+                                                <div>
+                                                    <a style="color: #da0f32" class="comment-reply" onclick="toggleReplyForm('replyForm_@comment.Id')">Reply</a>
+                                                </div>
+                                                <div style="margin-left: 10px;">
+                                                    <a style="color: #da0f32" class="comment-reply">Report</a>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div>
+                                                <a style="color: #da0f32" class="comment-reply">Report</a>
+                                            </div>
+                                        }
+                                    </div>
                                 }
+     
+                                   
+                            
 
                                 <!-- Reply Form -->
                                 <div id="replyForm_@comment.Id" style="display: none;">

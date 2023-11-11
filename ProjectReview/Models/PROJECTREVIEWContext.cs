@@ -55,7 +55,6 @@ namespace ProjectReview.Models
                     .HasMaxLength(50)
                     .HasColumnName("name");
             });
-
             modelBuilder.Entity<Comment>(entity =>
             {
                 entity.ToTable("Comment");
@@ -91,6 +90,37 @@ namespace ProjectReview.Models
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_Comment_User");
             });
+
+            //modelBuilder.Entity<Comment>(entity =>
+            //{
+            //    entity.ToTable("Comment");
+
+            //    entity.Property(e => e.Id).HasColumnName("id");
+
+            //    entity.Property(e => e.Content).HasColumnName("content");
+
+            //    entity.Property(e => e.Date)
+            //        .HasColumnType("datetime")
+            //        .HasColumnName("date");
+
+            //    entity.Property(e => e.Image).HasColumnName("image");
+
+            //    entity.Property(e => e.LikeNumber).HasColumnName("likeNumber");
+
+            //    entity.Property(e => e.LocationId).HasColumnName("locationID");
+
+            //    entity.Property(e => e.UserId).HasColumnName("userID");
+
+            //    entity.HasOne(d => d.Location)
+            //        .WithMany(p => p.Comments)
+            //        .HasForeignKey(d => d.LocationId)
+            //        .HasConstraintName("FK_Comment_Location");
+
+            //    entity.HasOne(d => d.User)
+            //        .WithMany(p => p.Comments)
+            //        .HasForeignKey(d => d.UserId)
+            //        .HasConstraintName("FK_Comment_User");
+            //});
 
             modelBuilder.Entity<CommentStatus>(entity =>
             {
@@ -281,9 +311,7 @@ namespace ProjectReview.Models
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.LikeNumber).HasColumnName("likeNumber");
-
                 entity.Property(e => e.StatusId).HasColumnName("statusId");
-
                 entity.Property(e => e.UserId).HasColumnName("userID");
 
                 entity.HasOne(d => d.Comment)
@@ -295,7 +323,7 @@ namespace ProjectReview.Models
                     .WithMany()
                     .HasForeignKey(d => d.StatusId)
                     .HasConstraintName("FK_Reply_CommentStatus");
-            });
+        });
 
             modelBuilder.Entity<Role>(entity =>
             {
