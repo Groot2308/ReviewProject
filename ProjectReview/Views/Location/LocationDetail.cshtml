@@ -3,6 +3,44 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model LocationWithComments
+<style>
+    .comments-form {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+
+        .comments-form h3 {
+            margin-bottom: 15px;
+        }
+
+        .comments-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .comments-form textarea {
+            resize: none;
+        }
+
+        .comments-form input[type="file"] {
+            margin-top: 10px;
+        }
+
+    #imagePreview {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        margin-top: 10px;
+    }
+
+    .clearfix {
+        clear: both;
+        margin-top: 10px;
+    }
+
+</style>
+
 
 <div class="banner-area" id="banner-area" style="background-image:url('@Url.Content("~/images/banner/banner2.jpg")'); margin-top: 70px;">
     <div class="container">
@@ -38,7 +76,8 @@
                     </ol>
                     <!-- Indicators end-->
                     <!-- Carousel inner-->
-                    @*        <div class="carousel-inner">
+
+             @*               <div class="carousel-inner">
                     @foreach (var locationImg in Model.LocationImgs)
                     {
                     <div class="carousel-item @(locationImg == Model.LocationImgs.First() ? "active" : "")">
@@ -48,11 +87,17 @@
                     </div>*@
 
                     <div class="carousel-inner">
-                        <div class="carousel-item active" style="background-image:url('@Url.Content("~/images/projects/project1.jpg")');">
+                         @foreach(var locationImg in Model.Location.LocationImgs){
+
+                            <div class="carousel-item @(locationImg == Model.Location.LocationImgs.First() ? "active" : "")" style="background-image:url('@Url.Content(locationImg.ToString())');">
+                            </div>
+
+                        }
+                   @*     <div class="carousel-item active" style="background-image:url('@Url.Content("~/images/projects/project1.jpg")');">
                         </div>
                         <!-- Carousel item 1 end-->
                         <div class="carousel-item " style="background-image:url('@Url.Content("~/images/projects/project2.jpg")');">
-                        </div>
+                        </div>*@
                     </div>
                     <!-- Carousel inner end-->
                     <!-- Controllers-->
@@ -151,6 +196,7 @@
 
         </div>
         <!-- row end -->
+
         <div id="comments" class="comments-area">
             <h3 class="comments-heading">@Model.Comments.Count() Comments</h3>
 
@@ -166,6 +212,9 @@
                                 </div>
                                 <div class="comment-content">
                                     <p>@comment.Content</p>
+                                </div>
+                                <div style="width: 20%">
+                                    <img src="@comment.Image" class="d-block w-100" alt="Image">
                                 </div>
 
                                 @{
@@ -226,10 +275,10 @@
                                                         <input type="hidden" name="locationId" value="@Model.Location.Id" />
                                                         <textarea style="margin-bottom: -13px; width: 40%;" name="replyContent" class="reply-textarea" id="replyContent_@comment.Id" placeholder="Write your reply here" required></textarea>
                                                         <button style="    background: #da0f32;
-                                     border: 2px solid transparent;
-                                     color: white;
-                                     border-radius: 7px;
-                                  }" type="submit" class="reply-submit-btn">
+                                                 border: 2px solid transparent;
+                                                 color: white;
+                                                  border-radius: 7px;
+                                                  }" type="submit" class="reply-submit-btn">
                                                             send
                                                         </button>
                                                     </form>
@@ -245,7 +294,6 @@
                     <!-- Comments-list li end -->
                 }
             </ul><!-- Comments-list ul end -->
-
         </div><!-- Post comment end -->
 
         <script>
@@ -271,24 +319,36 @@
                 <div class="comments-form border-box">
                     <h3 class="title-normal">Add a comment</h3>
 
-                    <form role="form" asp-controller="Comment" asp-action="Comment" method="post">
+                    <form id="commentForm" role="form" asp-controller="Comment" asp-action="Comment" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="locationId" value="@Model.Location.Id" />
                         <input type="hidden" name="userId" value="@acc.Id" />
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <textarea name="commentContent" style="height: 12rem;" class="form-control required-field" id="message" placeholder="Your Comment" rows="10" required></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <input type="file" id="imageInput" name="image" onchange="previewImage(event)" />
+                                    <img id="imagePreview" src="#" alt="Your image" style="display: none; max-width: 165px; max-height: 100px;" />
+                                </div>
                             </div><!-- Col 12 end -->
-
                         </div><!-- Form row end -->
+
                         <div class="clearfix">
                             <button class="btn btn-primary" type="submit">Post Comment</button>
                         </div>
                     </form><!-- Form end -->
                 </div>
 
-                <!-- Comments form end -->
+
+                <script>
+                    function previewImage(event) {
+                        var image = document.getElementById('imagePreview');
+                        image.style.display = 'block';
+                        image.src = URL.createObjectURL(event.target.files[0]);
+                    }
+                </script>
             }
             else
             {

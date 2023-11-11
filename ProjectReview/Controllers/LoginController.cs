@@ -84,7 +84,7 @@ namespace ProjectReview.Controllers
             if (users == null)
             {
 
-                var user = new User { Email = userEmail, Name = userName, CreateDate = DateTime.Now, StatusId = 1, RoleId = 2 };
+                var user = new User { Email = userEmail, Name = userName, CreateDate = DateTime.Now, StatusId = 1, RoleId = 2, Avatar = "/images/team/user.jpg" };
                 _userRepository.Add(user);
                 _userRepository.SaveChanges();
                 string userJson = JsonConvert.SerializeObject(user);
