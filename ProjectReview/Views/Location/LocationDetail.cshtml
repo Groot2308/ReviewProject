@@ -3,7 +3,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model LocationWithComments
+@section rate{
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <script>
+        function toggleLike(commentId) {
+            const likeIcon = document.getElementById(`likeIcon_${commentId}`);
+            const likeCountElement = document.getElementById(`likeCount_${commentId}`);
+
+            // Kiểm tra xem nút like đã được ấn chưa
+            const isLiked = likeIcon.classList.contains('liked');
+
+            // Gửi yêu cầu đến server để cập nhật LikeNumber
+            fetch(`/Comment/ToggleLike?commentId=${commentId}&isLiked=${isLiked}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                // Các thông tin khác nếu cần
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Cập nhật số lượt like trên giao diện
+                    likeCountElement.textContent = data.likeCount;
+
+                    // Thay đổi màu của icon like
+                    if (isLiked) {
+                        likeIcon.classList.remove('liked');
+                    } else {
+                        likeIcon.classList.add('liked');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+}
+
 <style>
+
     .comments-form {
         background-color: #f9f9f9;
         padding: 20px;
@@ -37,6 +78,101 @@
     .clearfix {
         clear: both;
         margin-top: 10px;
+    }
+
+    .inner {
+        padding: 1em;
+        background-color: white;
+        overflow: hidden;
+        position: relative;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+
+    .rating {
+        float: left;
+        width: 45%;
+        margin-right: 5%;
+        text-align: center;
+    }
+
+    .rating-num {
+        color: #333333;
+        font-size: 72px;
+        font-weight: 100;
+        line-height: 1em;
+    }
+
+    .rating-stars {
+        font-size: 20px;
+        color: #E3E3E3;
+        margin-bottom: .5em;
+    }
+
+        .rating-stars .active {
+            color: #FFCC00;
+        }
+
+    .rating-users {
+        font-size: 14px;
+    }
+
+    .histo {
+        float: left;
+        width: 50%;
+        font-size: 13px;
+    }
+
+    .histo-star {
+        float: left;
+        padding: 3px;
+        color: #FFCC00;
+    }
+
+    .histo-rate {
+        width: 100%;
+        display: -webkit-inline-box;
+        clear: both;
+    }
+
+    .bar-block {
+        margin-left: 5px;
+        color: black;
+        display: block;
+        float: left;
+        width: 75%;
+        position: relative;
+    }
+
+    .bar {
+        padding: 4px;
+        display: block;
+    }
+
+    .like-section {
+        display: flex;
+        align-items: center;
+    }
+
+    .like-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        color: #333;
+    }
+
+        .like-btn:hover {
+            color: #da0f32; /* Màu sắc khi di chuột qua */
+        }
+
+    .like-count {
+        margin-left: 5px;
+    }
+
+    .like-btn .fa-thumbs-up.liked {
+        color: #da0f32; /* Màu sắc khi nút like được ấn */
     }
 
 </style>
@@ -76,8 +212,7 @@
                     </ol>
                     <!-- Indicators end-->
                     <!-- Carousel inner-->
-
-             @*               <div class="carousel-inner">
+                    @*               <div class="carousel-inner">
                     @foreach (var locationImg in Model.LocationImgs)
                     {
                     <div class="carousel-item @(locationImg == Model.LocationImgs.First() ? "active" : "")">
@@ -87,13 +222,14 @@
                     </div>*@
 
                     <div class="carousel-inner">
-                         @foreach(var locationImg in Model.Location.LocationImgs){
+                        @foreach (var locationImg in Model.Location.LocationImgs)
+                        {
 
                             <div class="carousel-item @(locationImg == Model.Location.LocationImgs.First() ? "active" : "")" style="background-image:url('@Url.Content(locationImg.ToString())');">
                             </div>
 
                         }
-                   @*     <div class="carousel-item active" style="background-image:url('@Url.Content("~/images/projects/project1.jpg")');">
+                        @*     <div class="carousel-item active" style="background-image:url('@Url.Content("~/images/projects/project1.jpg")');">
                         </div>
                         <!-- Carousel item 1 end-->
                         <div class="carousel-item " style="background-image:url('@Url.Content("~/images/projects/project2.jpg")');">
@@ -118,12 +254,95 @@
                     <div class="complete-project-bg">
                         <div class="row">
                             <div class="ts-progress-bar">
-                                <h3>Project ompleted</h3>
-                                <div class="progress">
-                                    <div class="progress-bar" style="width:85%; background:#da0f32;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-value">85%</div>
+                                <h3>Location rate</h3>
+
+
+                                <div class="container">
+                                    <div class="inner">
+                                        <div class="rating">
+                                            <span class="rating-num">4.0</span>
+                                            <div class="rating-stars">
+                                                <span><i class="active icon-star"></i></span>
+                                                <span><i class="active icon-star"></i></span>
+                                                <span><i class="active icon-star"></i></span>
+                                                <span><i class="active icon-star"></i></span>
+                                                <span><i class="icon-star"></i></span>
+                                            </div>
+                                            <div class="rating-users">
+                                                <i class="icon-user"></i> 1,014,004 total
+                                            </div>
+                                        </div>
+
+                                        <div class="histo">
+                                            <div class="five histo-rate">
+                                                <span class="histo-star">
+                                                    <i class="active icon-star"></i>
+                                                    <i class="active icon-star"></i>
+                                                    <i class="active icon-star"></i>
+                                                    <i class="active icon-star"></i>
+                                                    <i class="active icon-star"></i>
+                                                </span>
+                                                <span class="bar-block">
+                                                    <span id="bar-five" class="bar">
+                                                        <span>566,784</span>&nbsp;
+                                                    </span>
+                                                </span>
+                                            </div>
+
+                                            <div class="four histo-rate">
+                                                <span class="histo-star">
+                                                    <i class="active icon-star"></i>
+                                                    <i class="active icon-star"></i>
+                                                    <i class="active icon-star"></i>
+                                                    <i class="active icon-star"></i>
+                                                </span>
+                                                <span class="bar-block">
+                                                    <span id="bar-four" class="bar">
+                                                        <span>171,298</span>&nbsp;
+                                                    </span>
+                                                </span>
+                                            </div>
+
+                                            <div class="three histo-rate">
+                                                <span class="histo-star">
+                                                    <i class="active icon-star"></i>
+                                                    <i class="active icon-star"></i>
+                                                    <i class="active icon-star"></i>
+                                                </span>
+                                                <span class="bar-block">
+                                                    <span id="bar-three" class="bar">
+                                                        <span>94,940</span>&nbsp;
+                                                    </span>
+                                                </span>
+                                            </div>
+
+                                            <div class="two histo-rate">
+                                                <span class="histo-star">
+                                                    <i class="active icon-star"></i>
+                                                    <i class="active icon-star"></i>
+                                                </span>
+                                                <span class="bar-block">
+                                                    <span id="bar-two" class="bar">
+                                                        <span>44,525</span>&nbsp;
+                                                    </span>
+                                                </span>
+                                            </div>
+
+                                            <div class="one histo-rate">
+                                                <span class="histo-star">
+                                                    <i class="active icon-star"></i>
+                                                </span>
+                                                <span class="bar-block">
+                                                    <span id="bar-one" class="bar">
+                                                        <span>136,457</span>&nbsp;
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+
                             </div>
                             <!-- Content row end-->
                         </div>
@@ -218,7 +437,7 @@
                                 </div>
 
                                 @{
-                               
+
                                     string? acc = Context.Session.GetString("User");
                                     <div class="text-left">
                                         @if (!string.IsNullOrEmpty(Context.Session.GetString("User")))
@@ -227,22 +446,38 @@
                                                 <div>
                                                     <a style="color: #da0f32" class="comment-reply" onclick="toggleReplyForm('replyForm_@comment.Id')">Reply</a>
                                                 </div>
-                                                <div style="margin-left: 10px;">
-                                                    <a href="~/Comment/Report?id=@comment.Id&locaId=@comment.LocationId" style="color: #da0f32" class="comment-reply">Report</a>
+                                                <div style="margin-left: 10px;   padding-right: 1rem; ">
+                                                    <a style="color: #da0f32" class="comment-reply">Report</a>
+                                                </div>
+                                                <div class="like-section">
+                                                    <button class="like-btn" onclick="toggleLike(@comment.Id)">
+                                                        <i class="fas fa-thumbs-up" id="likeIcon_@comment.Id"></i>
+                                                    </button>
+                                                    <span class="like-count" id="likeCount_@comment.Id">@comment.LikeNumber</span>
                                                 </div>
                                             </div>
                                         }
                                         else
                                         {
-                                            <div>
-                                                <a href ="~/Comment/Report?id=@comment.Id&locaId=@comment.LocationId" style="color: #da0f32" class="comment-reply">Report</a>
+                                            
+                                                
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="    padding-right: 1rem;">
+                                                    <a href ="~/Comment/Report?id=@comment.Id&locaId=@comment.LocationId" style="color: #da0f32" class="comment-reply">Report</a>
+                                                </div>
+                                                <div class="like-section">
+                                                    <button class="like-btn" onclick="toggleLike(@comment.Id)">
+                                                        <i class="fas fa-thumbs-up" id="likeIcon_@comment.Id"></i>
+                                                    </button>
+                                                    <span class="like-count" id="likeCount_@comment.Id">@comment.LikeNumber</span>
+                                                </div>
                                             </div>
                                         }
                                     </div>
                                 }
-     
-                                   
-                            
+
+
+
 
                                 <!-- Reply Form -->
                                 <div id="replyForm_@comment.Id" style="display: none;">
@@ -280,8 +515,23 @@
                                                     string? check = Context.Session.GetString("User");
                                                     if (check != null)
                                                     {
+                                                        <div style="display: flex; align-items: center;">
                                                         <div class="text-left">
                                                             <a style="color:#da0f32" class="comment-reply" onclick="toggleReplyForm('replyForm_@reply.Id')">Reply</a>
+                                                        </div>
+                                                            <div class="like-section">
+                                                                <button class="like-btn" onclick="toggleLike(@comment.Id)">
+                                                                    <i class="fas fa-thumbs-up" id="likeIcon_@comment.Id"></i>
+                                                                </button>
+                                                                <span class="like-count" id="likeCount_@comment.Id">@comment.LikeNumber</span>
+                                                            </div>
+                                                        </div>
+                                                    }else{
+                                                        <div class="like-section">
+                                                            <button class="like-btn" onclick="toggleLike(@comment.Id)">
+                                                                <i class="fas fa-thumbs-up" id="likeIcon_@comment.Id"></i>
+                                                            </button>
+                                                            <span class="like-count" id="likeCount_@comment.Id">@comment.LikeNumber</span>
                                                         </div>
                                                     }
                                                 }
@@ -372,10 +622,10 @@
                 <form role="form" asp-controller="Login" asp-action="Login" method="get">
                     <div class="clearfix">
                         <button style=" width: 50%;
-                            height: 56px;
-                            margin-left: 17rem;
-                            border-radius: 13px;
-                            font-size: 18px;" class="btn btn-primary" type="submit">
+                                                        height: 56px;
+                                                        margin-left: 17rem;
+                                                        border-radius: 13px;
+                                                        font-size: 18px;" class="btn btn-primary" type="submit">
                             Please Login To Comment
                         </button>
                     </div>
@@ -388,5 +638,3 @@
     </div>
     <!-- main container end -->
 </section>
-
-
