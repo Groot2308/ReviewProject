@@ -2,6 +2,8 @@
 using ProjectReview.Repositories;
 using Newtonsoft.Json;
 using ProjectReview.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace ProjectReview.Controllers
 {
     public class CommentController : Controller
@@ -65,5 +67,25 @@ namespace ProjectReview.Controllers
             TempData["locationId"] = locationId;
         return RedirectToAction("LocationDetail", "Location");
     }
-}
+
+        [HttpPost]
+        public IActionResult ToggleLike(int commentId, bool isLiked)
+        {
+            var comment = _commentRepository.GetSingleByCondition(c => c.Id == commentId);
+
+            // Tăng giảm LikeNumber tùy thuộc vào trạng thái hiện tại
+            if (isLiked)
+            {
+                comment.LikeNumber--;
+            }
+            else
+            {
+                comment.LikeNumber++;
+            }
+            _commentRepository.SaveChanges();
+
+            // Trả về số lượt like mới để cập nhật giao diện
+            return Json(new { likeCount = comment.LikeNumber });
+        }
+    }
 }
