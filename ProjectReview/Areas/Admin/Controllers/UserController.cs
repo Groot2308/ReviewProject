@@ -38,6 +38,24 @@ namespace ProjectReview.Areas.Admin.Controllers
             return View(users);
         }
 
+        [Route("UsersBlocked")]
+
+        public IActionResult UsersBlocked(int page = 1, int pageSize = 5, string searchKeyword = "")
+        {
+            var includes = new string[] { "Status", "Role" };
+
+            int total;
+            var users = _userRepository.GetMulti(
+                user => (string.IsNullOrEmpty(searchKeyword) && user.Name.Contains(searchKeyword) || user.Email.Contains(searchKeyword)) && user.StatusId == 3,
+                includes: includes
+            ).ToPagedList(TempData["page"] == null ? page : (int)TempData["page"], pageSize);
+
+
+            ViewBag.SearchKeyword = searchKeyword; // Lưu từ khóa tìm kiếm vào ViewBag
+
+            return View(users);
+        }
+
 
         [Route("CreateUser")]
         [HttpGet]

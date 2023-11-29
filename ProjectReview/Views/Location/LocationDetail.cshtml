@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "LocationDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -446,8 +446,8 @@
                                                 <div>
                                                     <a style="color: #da0f32" class="comment-reply" onclick="toggleReplyForm('replyForm_@comment.Id')">Reply</a>
                                                 </div>
-                                                <div style="margin-left: 10px;   padding-right: 1rem; ">
-                                                    <a style="color: #da0f32" class="comment-reply">Report</a>
+                                                <div style="margin-left: 10px;">
+                                                    <a href="~/Comment/Report?id=@comment.Id&locaId=@comment.LocationId" style="color: #da0f32" class="comment-reply">Report</a>
                                                 </div>
                                                 <div class="like-section">
                                                     <button class="like-btn" onclick="toggleLike(@comment.Id)">
@@ -469,6 +469,8 @@
                                                     </button>
                                                     <span class="like-count" id="likeCount_@comment.Id">@comment.LikeNumber</span>
                                                 </div>
+                                            <div>
+                                                <a href ="~/Comment/Report?id=@comment.Id&locaId=@comment.LocationId" style="color: #da0f32" class="comment-reply">Report</a>
                                             </div>
                                         }
                                     </div>
@@ -501,7 +503,7 @@
                                 {
                                     <li>
                                         <div class="comment">
-                                            <img class="comment-avatar pull-left" alt="" src="@reply.User.Avatar">
+                                            <img class="comment-avatar pull-left" alt="" src="~/@reply.User.Avatar">
                                             <div class="comment-body">
                                                 <div class="meta-data">
                                                     <span class="comment-author">@reply.User.Name</span>
