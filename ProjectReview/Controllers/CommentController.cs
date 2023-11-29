@@ -89,11 +89,6 @@ namespace ProjectReview.Controllers
             return RedirectToAction("LocationDetail", "Location", new { id = locaId });
         }
 
-
-
-
-    }
-
         [HttpPost]
         public IActionResult ToggleLike(int commentId, bool isLiked)
         {
