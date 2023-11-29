@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewData["Title"] = "ListBlockOfComment";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+@using ProjectReview.Models
+@using X.PagedList
+@model IPagedList<Comment>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">List Report Comment</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard v2</li>
+                    </ol>
+                </div><!-- /.col -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="searchKeyword" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <button class="btn btn-primary" onclick="searchUsers()">Search</button>
+                    </div>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+        <script>
+            function searchUsers() {
+                var searchKeyword = $("#searchKeyword").val();
+                var url = "/CommentManager/ListReport?page=1&pageSize=@ViewBag.PageSize&searchKeyword=" + searchKeyword;
+                window.location.href = url;
+            }
+        </script>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Simple Full Width Table</h3>
+
+                    <div class="card-tools">
+                        <ul class="pagination pagination-sm float-right">
+                            @if (Model.PageNumber > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="~/CommentManager/ListReport?page=@(Model.PageNumber - 1)@(string.IsNullOrEmpty(ViewBag.SearchKeyword) ? "" : $"&searchKeyword={ViewBag.SearchKeyword}")">&laquo;</a>
+                                </li>
+                            }
+                            @for (int i = 1; i <= Model.PageCount; i++)
+                            {
+                                <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                                    <a class="page-link" href="~/CommentManager/ListReport?page=@i@(string.IsNullOrEmpty(ViewBag.SearchKeyword) ? "" : $"&searchKeyword={ViewBag.SearchKeyword}")">@i</a>
+                                </li>
+                            }
+                            @if (Model.PageNumber < Model.PageCount)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="~/CommentManager/ListReport?page=@(Model.PageNumber + 1)@(string.IsNullOrEmpty(ViewBag.SearchKeyword) ? "" : $"&searchKeyword={ViewBag.SearchKeyword}")">&raquo;</a>
+                                </li>
+                            }
+                        </ul>
+
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Nội dung</th>
+                                <th>Ảnh</th>
+                                <th>Tên Địa Điểm</th>
+                                <th>Email</th>
+                                <th>Tên người dùng</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày</th>
+                                <th>Chặn người dùng</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int index = 1;
+                            }
+                            @foreach (Comment list in Model)
+                            {
+                                <tr>
+                                    <td>@(index++)</td>
+                                    <td>@list.Content</td>
+                                    <td>
+                                        <img src="@list.Image" class="d-block w-60" alt="Image" style="width:50px">
+                                    </td>
+                                    <td>@list.Location?.Name</td>
+                                    <td>@list.User?.Email</td>
+                                    <td>@list.User?.Name</td>
+                                    <td>
+                                        <style>
+                                            .button {
+                                                background: none;
+                                                background-color: #28a745;
+                                                border: none;
+                                                padding: 5px;
+                                                margin: auto;
+                                                cursor: pointer;
+                                                border-radius: 6px;
+                                            }
+                                        </style>
+
+                                        <form action="~/CommentManager/ChangeStatuss?page=@Model.PageNumber&check=cmt&work=hine&id=@list.Id" method="post">
+                                                <button type="submit" class="button badge bg-danger" style="height:fit-content">
+                                                    Hine
+                                                </button>
+                                            </form>
+                                        <form action="~/CommentManager/ChangeStatuss?page=@Model.PageNumber&check=cmt&work=active&id=@list.Id" method="post">
+                                            <button type="submit" class="button badge bg-success" style="height:fit-content">
+                                                    Active
+                                                </button>
+                                            </form>
+
+
+                                    </td>
+                                    <td>@list.Date</td>
+                                    <td>
+                                        <style>
+                                            .button {
+                                                background: none;
+                                                background-color: #28a745;
+                                                border: none;
+                                                padding: 5px;
+                                                margin: auto;
+                                                cursor: pointer;
+                                                border-radius: 6px;
+                                            }
+                                        </style>
+                                        <form action="~/CommentManager/BlockUser?page=@Model.PageNumber&check=cmt&id=@list.UserId" method="post">
+                                            <button type="submit" class="button badge bg-danger" style="height:fit-content">
+                                                Block
+                                            </button>
+                                        </form>
+
+
+                                    </td>
+
+                                    
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+        </div>
+
+    </div>
+</div>
+
